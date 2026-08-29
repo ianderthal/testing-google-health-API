@@ -1,0 +1,9 @@
+{
+  "name": "testing-google-health-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node fetch_health_data.js"
+  }
+}
