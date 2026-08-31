@@ -11,7 +11,7 @@ import { stdin, stdout } from "node:process";
 const CLIENT_ID = process.env.GOOGLE_HEALTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.GOOGLE_HEALTH_CLIENT_SECRET;
 const REDIRECT_URI = "https://www.google.com";
-const SCOPE = "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly";
+const SCOPE = "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly";
 
 const AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -62,8 +62,8 @@ async function exchangeCodeForTokens(code) {
   return response.json();
 }
 
-async function getExerciseData(accessToken) {
-  const response = await fetch(`${API_BASE}/users/me/dataTypes/exercise/dataPoints`, {
+async function getWeightData(accessToken) {
+  const response = await fetch(`${API_BASE}/users/me/dataTypes/weight/dataPoints`, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
   if (!response.ok) {
@@ -82,7 +82,7 @@ async function main() {
 
   const code = await getAuthorizationCode();
   const tokens = await exchangeCodeForTokens(code);
-  const data = await getExerciseData(tokens.access_token);
+  const data = await getWeightData(tokens.access_token);
 
   console.log(JSON.stringify(data, null, 2));
 }
